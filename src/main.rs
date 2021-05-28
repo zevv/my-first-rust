@@ -31,11 +31,10 @@ fn main() {
         g.dump();
     }
 
-    let u = Voltage::from_float(8.0);
-    let i = Current::from_float(4.0);
-    let t = Time::from_float(3.0);
-    let r = u * i * t;
+    let u = Voltage::from(8.0);
+    let i = Current::from(4.0);
+    let t = Duration::from(3.0);
 
-    println!("{} {} ", r.to_string(), r > r);
+    println!("{}", u * i * t);
 }
 
