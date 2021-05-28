@@ -20,6 +20,8 @@ fn main() {
         gpio1: driver::gpio::linux::Linux::new(),
         gpio2: driver::gpio::arm::Arm::new(),
     };
+
+    bms.gpio.set(true);
    
 }
 
