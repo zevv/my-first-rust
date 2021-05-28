@@ -17,12 +17,15 @@ fn main() {
     println!("Hello");
 
     let bms = Bms {
-        gpio1: driver::gpio::linux::Linux::new(23, driver::gpio::Direction::Input),
-        gpio2: driver::gpio::arm::Arm::new(),
+        gpio1: driver::gpio::linux::new(23, driver::gpio::Direction::Input),
+        gpio2: driver::gpio::arm::new(),
     };
 
     bms.gpio1.set(true);
     bms.gpio2.set(true);
+    
+    bms.gpio1.dump();
+    bms.gpio2.dump();
    
 }
 

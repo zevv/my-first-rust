@@ -1,27 +1,24 @@
 
-pub struct Linux
+pub struct Driver
 {
     id: i8
 }
-
-impl Linux {
     
-    pub fn new(id: i8, dir: super::Direction) -> Box<dyn super::Driver> {
-        Box::new(Linux {id: id})
-    }
-
+pub fn new(id: i8, dir: super::Direction) -> Box<dyn super::Driver> {
+    Box::new(Driver {id: id})
 }
 
-impl super::super::Driver for Linux {
+
+impl super::super::Driver for Driver {
     fn name(&self) -> &'static str {
         "gpio_linux"
     }
     fn dump(&self) {
-        println!("dump");
+        println!("dump {}", self.name());
     }
 }
 
-impl super::Driver for Linux {
+impl super::Driver for Driver {
 
     fn set(&self, _val: bool) {
         println!("set linux");

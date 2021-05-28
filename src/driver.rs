@@ -6,3 +6,8 @@ pub trait Driver {
     fn name(&self) -> &'static str;
 }
 
+impl Driver {
+    fn dump(&self) {
+        println!("dump generic");
+    }
+}

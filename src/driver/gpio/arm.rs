@@ -1,26 +1,24 @@
 
-pub struct Arm
+pub struct Driver
 {
 }
 
-impl Arm {
     
-    pub fn new() -> Box<dyn super::Driver> {
-        Box::new(Arm {})
-    }
-
+pub fn new() -> Box<dyn super::Driver> {
+    Box::new(Driver {})
 }
 
-impl super::super::Driver for Arm {
+
+impl super::super::Driver for Driver {
     fn name(&self) -> &'static str {
-        "gpio_linux"
+        "gpio_arm"
     }
     fn dump(&self) {
-        println!("dump");
+        println!("dump {}", self.name());
     }
 }
 
-impl super::Driver for Arm {
+impl super::Driver for Driver {
 
     fn set(&self, _val: bool) {
         println!("set arm");
