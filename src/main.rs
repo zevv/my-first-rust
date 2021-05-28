@@ -21,7 +21,8 @@ fn main() {
         gpio2: driver::gpio::arm::Arm::new(),
     };
 
-    bms.gpio.set(true);
+    bms.gpio1.set(true);
+    bms.gpio2.set(true);
    
 }
 
