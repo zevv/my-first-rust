@@ -2,11 +2,8 @@
 pub mod gpio;
 
 pub trait Driver {
-    fn dump(&self);
-    fn name(&self) -> &'static str;
-}
+    fn name(&self) -> String;
 
-impl Driver {
     fn dump(&self) {
         println!("dump generic");
     }

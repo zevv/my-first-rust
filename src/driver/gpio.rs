@@ -4,9 +4,9 @@ pub mod arm;
 
 pub enum Direction {
     Input,
-    InputPullUp,
-    InputPullDown,
-    Output
+    //InputPullUp,
+    //InputPullDown,
+    //Output
 }
 
 pub trait Driver: super::Driver {

@@ -1,5 +1,5 @@
 
-mod cell;
+//mod cell;
 mod driver;
 
 
@@ -16,9 +16,11 @@ fn main() {
 
     println!("Hello");
 
+    use driver::gpio;
+
     let bms = Bms {
-        gpio1: driver::gpio::linux::new(23, driver::gpio::Direction::Input),
-        gpio2: driver::gpio::arm::new(),
+        gpio1: gpio::linux::new(23, driver::gpio::Direction::Input),
+        gpio2: gpio::arm::new(),
     };
 
     bms.gpio1.set(true);

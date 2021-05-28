@@ -1,4 +1,5 @@
 
+
 pub struct Driver
 {
 }
@@ -10,11 +11,8 @@ pub fn new() -> Box<dyn super::Driver> {
 
 
 impl super::super::Driver for Driver {
-    fn name(&self) -> &'static str {
-        "gpio_arm"
-    }
-    fn dump(&self) {
-        println!("dump {}", self.name());
+    fn name(&self) -> String {
+        "gpio_arm".to_string()
     }
 }
 

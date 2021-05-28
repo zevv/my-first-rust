@@ -4,17 +4,17 @@ pub struct Driver
     id: i8
 }
     
-pub fn new(id: i8, dir: super::Direction) -> Box<dyn super::Driver> {
+pub fn new(id: i8, _dir: super::Direction) -> Box<dyn super::Driver> {
     Box::new(Driver {id: id})
 }
 
 
 impl super::super::Driver for Driver {
-    fn name(&self) -> &'static str {
-        "gpio_linux"
+    fn name(&self) -> String {
+        format!("gpio_linux {}", self.id)
     }
     fn dump(&self) {
-        println!("dump {}", self.name());
+        println!("dump {} {}", self.name(), self.id.to_string());
     }
 }
 
