@@ -1,12 +1,13 @@
 
 pub struct Linux
 {
+    id: i8
 }
 
 impl Linux {
     
-    pub fn new() -> Box<dyn super::Driver> {
-        Box::new(Linux {})
+    pub fn new(id: i8, dir: super::Direction) -> Box<dyn super::Driver> {
+        Box::new(Linux {id: id})
     }
 
 }

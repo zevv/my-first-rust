@@ -17,7 +17,7 @@ fn main() {
     println!("Hello");
 
     let bms = Bms {
-        gpio1: driver::gpio::linux::Linux::new(),
+        gpio1: driver::gpio::linux::Linux::new(23, driver::gpio::Direction::Input),
         gpio2: driver::gpio::arm::Arm::new(),
     };
 
