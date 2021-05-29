@@ -28,7 +28,7 @@ impl Default for Cell {
 }
 
 struct Bms {
-    gpio: [Box<dyn driver::gpio::Driver>; 2],
+    //gpio: [Box<dyn driver::gpio::Driver>; 2],
     cell_count: usize,
     cells: [Cell; MAX_CELL_COUNT],
 }
@@ -40,10 +40,10 @@ fn main() {
     use driver::gpio::Direction;
 
     let mut bms = Bms {
-        gpio: [
-            driver::gpio::linux::new(23, Direction::Input),
-            driver::gpio::arm::new(),
-        ],
+        //gpio: [
+        //    driver::gpio::linux::new(23, Direction::Input),
+        //    driver::gpio::arm::new(),
+        //],
         cell_count: 8,
         cells: [Cell::default(); MAX_CELL_COUNT],
     };
