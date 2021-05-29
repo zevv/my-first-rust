@@ -1,6 +1,6 @@
 
 //mod cell;
-mod driver;
+//mod driver;
 mod units;
 
 use units::*;
@@ -32,6 +32,18 @@ struct Bms {
     cell_count: usize,
     cells: [Cell; MAX_CELL_COUNT],
 }
+
+
+
+struct DevGpio {
+    drv: &DrvGpio,
+    nr: i8,
+}
+
+struct DrvGpio {
+    init: fn(&DevGpio),
+}
+
 
 fn main() {
 
