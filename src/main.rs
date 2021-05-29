@@ -7,7 +7,7 @@ use units::*;
 
 const MAX_CELL_COUNT: usize = 32;
 
-//static adc1: Box<dyn driver::adc::Driver> = driver::adc::linux::new();
+//static gpio1: driver::gpio::Driver = driver::gpio::linux::new();
 
 // fn print_type_of<T>(_: &T) {
 //     println!("{}", std::any::type_name::<T>())
@@ -37,7 +37,7 @@ fn main() {
 
     println!("Hello");
 
-    use driver::gpio::Direction;
+    //use driver::gpio::Direction;
 
     let mut bms = Bms {
         //gpio: [
@@ -48,10 +48,10 @@ fn main() {
         cells: [Cell::default(); MAX_CELL_COUNT],
     };
 
-    for g in bms.gpio.iter() {
-        g.set(true);
-        g.dump();
-    }
+    //for g in bms.gpio.iter() {
+    //    g.set(true);
+    //    g.dump();
+    //}
 
     let u = Voltage::from(8.0);
     let i = Current::from(-50.0);

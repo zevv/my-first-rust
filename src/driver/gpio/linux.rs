@@ -4,8 +4,12 @@ pub struct Driver
     id: i8
 }
     
-pub fn new(id: i8, _dir: super::Direction) -> Box<dyn super::Driver> {
+pub fn newBoxed(id: i8, _dir: super::Direction) -> Box<dyn super::Driver> {
     Box::new(Driver {id: id})
+}
+
+pub fn new(id: i8, _dir: super::Direction) -> Driver {
+    Driver {id: id}
 }
 
 
