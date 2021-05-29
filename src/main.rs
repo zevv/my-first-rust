@@ -7,6 +7,8 @@ use units::*;
 
 const MAX_CELL_COUNT: usize = 32;
 
+//static adc1: Box<dyn driver::adc::Driver> = driver::adc::linux::new();
+
 // fn print_type_of<T>(_: &T) {
 //     println!("{}", std::any::type_name::<T>())
 // }
@@ -27,7 +29,7 @@ impl Default for Cell {
 
 struct Bms {
     gpio: [Box<dyn driver::gpio::Driver>; 2],
-    cell_count: u8,
+    cell_count: usize,
     cells: [Cell; MAX_CELL_COUNT],
 }
 
@@ -62,9 +64,8 @@ fn main() {
 
     println!("{}", a * d);
 
-    for cell in bms.cells.iter_mut() {
-        cell.U = Voltage::from(3);
-        println!("{:?}", cell)
+    for i in 0..bms.cell_count {
+        println!("{:?}", bms.cells[i])
     }
 
 }

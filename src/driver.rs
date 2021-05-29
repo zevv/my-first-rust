@@ -1,5 +1,6 @@
 
 pub mod gpio;
+pub mod adc;
 
 pub trait Driver {
     fn name(&self) -> String;
