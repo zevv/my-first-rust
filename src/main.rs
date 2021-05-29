@@ -2,6 +2,7 @@
 //mod cell;
 //mod driver;
 mod units;
+mod drv;
 
 use units::*;
 use std::cell::Cell;
@@ -37,93 +38,45 @@ struct Bms {
 
 
 
-// GPIO Driver interface
-
-trait DrvGpio: Sync {
-    fn init(&self);
-    fn get(&self) -> bool;
-}
-
-// GPIO device instance
-
-struct DevGpio {
-    drv: &'static DrvGpio,
-    nr: i8,
-}
-
-// Generic gpio functions
-
-impl DevGpio {
-    fn init(&self) {
-        self.drv.init();
-    }
-    
-    fn get(&self) -> bool {
-        self.drv.get()
-    }
-}
-
-
-// Linux GPIO driver
-
-struct GpioLinux {
-    value: Cell<i8>,
-}
-unsafe impl Sync for GpioLinux {}
-
-impl DrvGpio for GpioLinux {
-    fn init(&self) {
-        println!("init linux, value = {}", self.value.get());
-    }
-    fn get(&self) -> bool {
-        let prev = self.value.get();
-        self.value.set(prev + 1);
-        prev % 2 == 0
-    }
-}
-
-
-// STM32 GPIO driver
-
-struct GpioArm {
-}
-
-impl DrvGpio for GpioArm {
-    fn init(&self) {
-        println!("init stm32");
-    }
-    fn get(&self) -> bool {
-        true
-    }
-}
-
-
 // GPIO device instances
 
-static gpio1_data: GpioLinux = GpioLinux {
-    value: Cell::new(1),
-};
 
-static gpio2_data: GpioLinux = GpioLinux {
-    value: Cell::new(1),
-};
+macro_rules! def_gpio {
+    ($name:ident, $dd:ident, $type:ident) => {
 
-static gpio3_data: GpioArm = GpioArm {
-};
+        static $name: drv::gpio::DevGpio = drv::gpio::DevGpio {
+            drv: & $dd,
+            nr: 32,
+        };
+
+        static $dd: drv::gpio::$type::Data = drv::gpio::$type::Data {
+            value: Cell::new(1),
+        };
+    }
+}
 
 
-static gpio1: DevGpio = DevGpio {
-    drv: &gpio1_data,
-    nr: 32,
-};
-static gpio2: DevGpio = DevGpio {
+def_gpio!(gpio1, gpio1_data, linux);
+
+
+static gpio2: drv::gpio::DevGpio = drv::gpio::DevGpio {
     drv: &gpio2_data,
     nr: 33,
 };
-static gpio3: DevGpio = DevGpio {
+
+static gpio2_data: drv::gpio::linux::Data = drv::gpio::linux::Data {
+    value: Cell::new(15),
+};
+
+
+static gpio3: drv::gpio::DevGpio = drv::gpio::DevGpio {
     drv: &gpio3_data,
     nr: 14,
 };
+
+static gpio3_data: drv::gpio::arm::Data = drv::gpio::arm::Data {
+};
+
 
 
 
