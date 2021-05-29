@@ -5,12 +5,30 @@ mod units;
 
 use units::*;
 
+const MAX_CELL_COUNT: usize = 32;
+
 // fn print_type_of<T>(_: &T) {
 //     println!("{}", std::any::type_name::<T>())
 // }
 
+#[allow(non_snake_case)]
+#[derive(Clone,Copy,Debug)]
+struct Cell {
+    U: Voltage,
+}
+
+impl Default for Cell {
+    fn default() -> Cell {
+        Cell {
+            U: Voltage::from(3.3300)
+        }
+    }
+}
+
 struct Bms {
     gpio: [Box<dyn driver::gpio::Driver>; 2],
+    cell_count: u8,
+    cells: [Cell; MAX_CELL_COUNT],
 }
 
 fn main() {
@@ -19,11 +37,13 @@ fn main() {
 
     use driver::gpio::Direction;
 
-    let bms = Bms {
+    let mut bms = Bms {
         gpio: [
             driver::gpio::linux::new(23, Direction::Input),
             driver::gpio::arm::new(),
-        ]
+        ],
+        cell_count: 8,
+        cells: [Cell::default(); MAX_CELL_COUNT],
     };
 
     for g in bms.gpio.iter() {
@@ -32,9 +52,20 @@ fn main() {
     }
 
     let u = Voltage::from(8.0);
-    let i = Current::from(4.0);
+    let i = Current::from(-50.0);
     let t = Duration::from(3.0);
 
     println!("{}", u * i * t);
+    
+    let a = Acceleration::from(9.81);
+    let d = Duration::from(10.0);
+
+    println!("{}", a * d);
+
+    for cell in bms.cells.iter_mut() {
+        cell.U = Voltage::from(3);
+        println!("{:?}", cell)
+    }
+
 }
 
