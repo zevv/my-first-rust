@@ -1,10 +1,14 @@
 
 use crate::drv;
-use std::cell::Cell;
+use std::cell::RefCell;
 
+
+pub struct DriverData {
+    pub value: i8,
+}
 
 pub struct Data {
-    pub value: Cell<i8>,
+    pub data: RefCell<DriverData>,
 }
 
 unsafe impl Sync for Data {}
@@ -13,13 +17,14 @@ unsafe impl Sync for Data {}
 impl drv::gpio::DrvGpio for Data {
 
     fn init(&self) {
-        println!("init linux, value = {}", self.value.get());
+        let d = self.data.borrow_mut();
+        println!("init linux, value = {}", d.value);
     }
 
     fn get(&self) -> bool {
-        let prev = self.value.get();
-        self.value.set(prev + 1);
-        prev % 2 == 0
+        let mut d = self.data.borrow_mut();
+        d.value = 5;
+        true
     }
 }
 

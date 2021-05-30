@@ -1,11 +1,17 @@
 
 use crate::drv;
-use std::cell::Cell;
+use std::cell::RefCell;
 
 // STM32 GPIO driver
 
-pub struct Data {
+pub struct DriverData {
 }
+
+pub struct Data {
+    pub data: RefCell<DriverData>,
+}
+
+unsafe impl Sync for Data {}
 
 impl drv::gpio::DrvGpio for Data {
 
@@ -14,7 +20,7 @@ impl drv::gpio::DrvGpio for Data {
     }
 
     fn get(&self) -> bool {
-        true
+        false
     }
 }
 
